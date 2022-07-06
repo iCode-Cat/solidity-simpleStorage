@@ -1,5 +1,6 @@
 const ethers = require('ethers');
 const fs = require('fs');
+require('dotenv').config();
 
 async function main() {
   // compile them in our code
@@ -7,16 +8,11 @@ async function main() {
   // http://127.0.0.1:7545 Local Blockchain
 
   // Local Ganache network
-  const provider = new ethers.providers.JsonRpcProvider(
-    'http://127.0.0.1:7545'
-  );
+  const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
 
   // Ganache private key
   // Private key will be using to sign all over the transactions
-  const wallet = new ethers.Wallet(
-    '408546bdcea0bca00aa6d2c192636ff813d1d3d54e7bab38996a509f37c0632a',
-    provider
-  );
+  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
   // Need ABI and binary compiled code to deploy.
   const abi = fs.readFileSync('./SimpleStorage_sol_SimpleStorage.abi', 'utf8');
